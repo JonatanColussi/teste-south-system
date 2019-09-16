@@ -37,11 +37,19 @@ class App {
 
   exceptionHandler() {
     this.server.use(async (err, req, res, next) => {
+      if (err.status) {
+        return res.status(err.status).json(err);
+      }
+
+      if (err.name === 'CastError' && err.kind === 'ObjectId') {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+
       if (process.env.NODE_ENV === 'development') {
         return res.status(500).json(err);
       }
 
-      return res.status(500).json({ error: 'Internal server error' });
+      return res.status(500).json({ message: 'Internal server error' });
     });
   }
 }

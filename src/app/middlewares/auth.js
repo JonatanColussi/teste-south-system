@@ -18,7 +18,7 @@ const verifyJWT = async (req, res, next) => {
     const { id } = jwt.verify(token, process.env.APP_SECRET);
 
     req.userId = id;
-    next();
+    return next();
   } catch (err) {
     return res.status(500).send({
       auth: false,

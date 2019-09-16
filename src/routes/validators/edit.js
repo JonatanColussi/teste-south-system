@@ -8,6 +8,6 @@ export default {
     available: Joi.boolean().required(),
   },
   params: {
-    _id: Joi.required(),
+    id: Joi.required(),
   },
 };

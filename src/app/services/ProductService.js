@@ -10,6 +10,7 @@ class ProductService {
   async paginated(options) {
     const {
       title,
+      available,
       page = 1,
       per_page = 5,
       sort = '-createdAt',
@@ -27,6 +28,10 @@ class ProductService {
 
     if (title) {
       filters.title = new RegExp(title, 'i');
+    }
+
+    if (available) {
+      filters.available = available;
     }
 
     if (priceMin || priceMax) {
