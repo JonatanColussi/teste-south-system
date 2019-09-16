@@ -1,8 +1,16 @@
 import ProductService from '../services/ProductService';
 
 class UserController {
-  async store(req, res) {
+  async store(req, res, next) {
     const product = await ProductService.create(req.body);
+
+    if (product.error) {
+      const { message } = product;
+      return next({
+        status: 409,
+        message,
+      });
+    }
 
     return res.status(201).json(product);
   }
@@ -33,6 +41,14 @@ class UserController {
       return next({
         status: 404,
         message: 'Product not found',
+      });
+    }
+
+    if (product.error) {
+      const { message } = product;
+      return next({
+        status: 409,
+        message,
       });
     }
 

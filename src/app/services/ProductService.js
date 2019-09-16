@@ -51,6 +51,15 @@ class ProductService {
   }
 
   async create(data) {
+    const { sku } = data;
+    const verifyDuplicate = await Product.findOne({ sku });
+
+    if (verifyDuplicate) {
+      return {
+        error: true,
+        message: 'Product duplicated',
+      };
+    }
     const product = await Product.create(data);
 
     return product;
@@ -63,6 +72,16 @@ class ProductService {
   }
 
   async update(id, data) {
+    const { sku } = data;
+    const find = await Product.findOne({ sku });
+
+    if (find._id !== id) {
+      return {
+        error: true,
+        message: 'Product duplicated',
+      };
+    }
+
     const product = await Product.findByIdAndUpdate(id, data, { new: true });
 
     return product;

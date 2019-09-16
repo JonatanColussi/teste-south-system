@@ -19,6 +19,10 @@ const ProductsSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    sku: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
