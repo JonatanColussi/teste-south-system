@@ -20,9 +20,9 @@ const verifyJWT = async (req, res, next) => {
     req.userId = id;
     return next();
   } catch (err) {
-    return res.status(500).send({
+    return res.status(401).send({
       auth: false,
-      message: 'Failed to authenticate token.',
+      message: err.message, // 'Failed to authenticate token.',
     });
   }
 };

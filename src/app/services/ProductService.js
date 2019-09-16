@@ -75,7 +75,7 @@ class ProductService {
     const { sku } = data;
     const find = await Product.findOne({ sku });
 
-    if (find.id !== id) {
+    if (find && find.id !== id) {
       return {
         error: true,
         message: 'Product duplicated',

@@ -45,7 +45,7 @@ class App {
         return res.status(404).json({ message: 'Product not found' });
       }
 
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV !== 'production') {
         return res.status(500).json(err);
       }
 

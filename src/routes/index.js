@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import validate from 'express-validation';
+import jwt from 'jsonwebtoken';
 
 import ProductController from '../app/controllers/ProductController';
 
@@ -12,6 +13,14 @@ import getOrDeleteValidator from './validators/getOrDelete';
 const routes = new Router();
 
 // Public routes
+routes.get('/jwt', (req, res) => {
+  return res.json({
+    token: jwt.sign({ id: 1 }, process.env.APP_SECRET, {
+      expiresIn: '30d',
+    }),
+  });
+});
+
 routes.get('/:id', validate(getOrDeleteValidator), ProductController.find);
 
 routes.use(auth);

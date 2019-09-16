@@ -37,18 +37,18 @@ class UserController {
   async update(req, res, next) {
     const product = await ProductService.update(req.params.id, req.body);
 
-    if (!product) {
-      return next({
-        status: 404,
-        message: 'Product not found',
-      });
-    }
-
     if (product.error) {
       const { message } = product;
       return next({
         status: 409,
         message,
+      });
+    }
+
+    if (!product) {
+      return next({
+        status: 404,
+        message: 'Product not found',
       });
     }
 
