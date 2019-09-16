@@ -1,12 +1,6 @@
 import Product from '../models/Product';
 
 class ProductService {
-  async all() {
-    const products = Product.find();
-
-    return products;
-  }
-
   async paginated(options) {
     const {
       title,
@@ -60,14 +54,13 @@ class ProductService {
         message: 'Product duplicated',
       };
     }
-    const product = await Product.create(data);
 
+    const product = await Product.create(data);
     return product;
   }
 
   async find(id) {
     const product = await Product.findById(id);
-
     return product;
   }
 
@@ -83,13 +76,11 @@ class ProductService {
     }
 
     const product = await Product.findByIdAndUpdate(id, data, { new: true });
-
     return product;
   }
 
   async destroy(id) {
     const deleted = await Product.findByIdAndDelete(id);
-
     return !!deleted;
   }
 }

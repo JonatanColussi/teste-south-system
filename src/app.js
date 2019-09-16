@@ -6,11 +6,14 @@ import mongoose from 'mongoose';
 
 import router from './routes';
 
+const swaggerDoc = require('./swaggerDoc');
+
 class App {
   constructor() {
     this.server = express();
     this.isTest = process.env.NODE_ENV === 'test';
 
+    swaggerDoc(this.server);
     this.middlewares();
     this.database();
     this.routes();
