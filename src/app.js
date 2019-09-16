@@ -4,7 +4,7 @@ import express from 'express';
 import 'express-async-errors';
 import mongoose from 'mongoose';
 
-import routes from './routes';
+import router from './routes';
 
 class App {
   constructor() {
@@ -23,7 +23,7 @@ class App {
   }
 
   routes() {
-    this.server.use(routes);
+    this.server.use(router);
   }
 
   database() {
