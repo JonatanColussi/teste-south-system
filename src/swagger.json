@@ -1,0 +1,418 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Products service",
+    "description": "routes containing a lock must enter the header \"Authorization Bearer [JWT TOKEN]\"",
+    "version": "1.0"
+  },
+  "host": "https://api-nrenard.herokuapp.com/",
+  "produces": [
+    "application/json"
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/jwt": {
+      "get": {
+        "tags": [
+          ""
+        ],
+        "summary": "Generate JWT Token for application",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "examples": {
+              "application/json": "{ message: 'Internal server error' }"
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "security": {
+          "bearerAuth": []
+        },
+        "tags": [
+          ""
+        ],
+        "summary": "Get all products",
+        "description": "use the query_string parameters to filter, page and sort the results",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query_string",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "available",
+            "in": "query_string",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "page",
+            "in": "query_string",
+            "required": false,
+            "type": "number",
+            "default": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query_string",
+            "required": false,
+            "type": "number",
+            "default": 5
+          },
+          {
+            "name": "sort",
+            "in": "query_string",
+            "required": false,
+            "type": "string",
+            "default": "-createdAt"
+          },
+          {
+            "name": "price_min",
+            "in": "query_string",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "price_max",
+            "in": "query_string",
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "available": {
+                    "type": "boolean"
+                  },
+                  "sku": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "examples": {
+              "application/json": "{ message: 'Internal server error' }"
+            }
+          }
+        }
+      },
+      "post": {
+        "security": {
+          "bearerAuth": []
+        },
+        "tags": [
+          ""
+        ],
+        "summary": "Insert product",
+        "description": "",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "form-urlencoded",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "form-urlencoded",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "in": "form-urlencoded",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "available",
+            "in": "form-urlencoded",
+            "required": false,
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "sku",
+            "in": "form-urlencoded",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "available": {
+                  "type": "boolean"
+                },
+                "sku": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "examples": {
+              "application/json": "{ message: 'Internal server error' }"
+            }
+          },
+          "409": {
+            "description": "",
+            "examples": {
+              "application/json": "{ 'status': 409, 'message': 'Product duplicated' }"
+            }
+          }
+        }
+      }
+    },
+    "/{:id}": {
+      "get": {
+        "tags": [
+          ""
+        ],
+        "summary": "Get datails for specific product",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "available": {
+                  "type": "boolean"
+                },
+                "sku": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "examples": {
+              "application/json": "{ message: 'Internal server error' }"
+            }
+          },
+          "404": {
+            "description": "",
+            "examples": {
+              "application/json": "{'status':404,'message':'Product not found'}"
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": {
+          "bearerAuth": []
+        },
+        "tags": [
+          ""
+        ],
+        "summary": "delete product",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "500": {
+            "description": "",
+            "examples": {
+              "application/json": "{ message: 'Internal server error' }"
+            }
+          },
+          "200": {
+            "description": "",
+            "examples": {
+              "application/json": "{'success':true}"
+            }
+          },
+          "404": {
+            "description": "",
+            "examples": {
+              "application/json": "{'status':404,'message':'Product not found'}"
+            }
+          }
+        }
+      },
+      "put": {
+        "security": {
+          "bearerAuth": []
+        },
+        "tags": [
+          ""
+        ],
+        "summary": "Edit product",
+        "description": "",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "form-urlencoded",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "form-urlencoded",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "in": "form-urlencoded",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "available",
+            "in": "form-urlencoded",
+            "required": false,
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "sku",
+            "in": "form-urlencoded",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "available": {
+                  "type": "boolean"
+                },
+                "sku": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "examples": {
+              "application/json": "{ message: 'Internal server error' }"
+            }
+          },
+          "409": {
+            "description": "",
+            "examples": {
+              "application/json": "{ 'status': 409, 'message': 'Product duplicated' }"
+            }
+          }
+        }
+      }
+    }
+  }
+}

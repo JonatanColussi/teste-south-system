@@ -6,3 +6,5 @@ tmp/*
 
 dist
 *.log
+
+__tests__/coverage

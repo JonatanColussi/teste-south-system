@@ -4,16 +4,16 @@ import express from 'express';
 import 'express-async-errors';
 import mongoose from 'mongoose';
 
+import swaggerUi from 'swagger-ui-express';
 import router from './routes';
 
-const swaggerDoc = require('./swaggerDoc');
+import swaggerDocument from './swagger.json';
 
 class App {
   constructor() {
     this.server = express();
     this.isTest = process.env.NODE_ENV === 'test';
 
-    swaggerDoc(this.server);
     this.middlewares();
     this.database();
     this.routes();
@@ -26,6 +26,13 @@ class App {
   }
 
   routes() {
+    const options = { customCss: '.swagger-ui .try-out { display: none }' };
+    this.server.use(
+      '/docs',
+      swaggerUi.serve,
+      swaggerUi.setup(swaggerDocument, options)
+    );
+
     this.server.use(router);
   }
 

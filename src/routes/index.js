@@ -13,12 +13,6 @@ import getOrDeleteValidator from './validators/getOrDelete';
 const routes = new Router();
 
 // Public routes
-/**
- * @swagger
- * /jwt:
- *    get:
- *      description: This should return all users
- */
 routes.get('/jwt', (req, res) => {
   return res.json({
     token: jwt.sign({ id: 1 }, process.env.APP_SECRET, {
