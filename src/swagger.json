@@ -5,7 +5,7 @@
     "description": "routes containing a lock must enter the header \"Authorization Bearer [JWT TOKEN]\"",
     "version": "1.0"
   },
-  "host": "https://api-nrenard.herokuapp.com/",
+  "host": "https://south-system.colussi.app/",
   "produces": [
     "application/json"
   ],
